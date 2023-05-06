@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FilmFolio</string>
+    <string name="search_movie_name">Search movie name</string>
+    <string name="search_button">Search</string>
 </resources>
