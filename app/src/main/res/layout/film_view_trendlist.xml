@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/list_trend"
+    android:layout_margin="8dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/film_image"
+            tools:src="@tools:sample/avatars"
+            android:layout_width="100dp"
+            android:layout_height="150dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+        <TextView
+            tools:text="@tools:sample/full_names"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/film_name"
+            android:layout_marginStart="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <RatingBar
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            style="?android:attr/ratingBarStyleSmall"
+            android:numStars="10"
+            android:stepSize="0.01"
+            android:isIndicator="true" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

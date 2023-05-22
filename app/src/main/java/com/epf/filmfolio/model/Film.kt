@@ -3,7 +3,7 @@ package com.epf.filmfolio.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-data class listResults(val results: List<Film>){}
+data class listResults(val results: List<Film>)
 
 @Parcelize
 data class Film(val adult: Boolean,

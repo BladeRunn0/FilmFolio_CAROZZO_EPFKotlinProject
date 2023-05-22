@@ -28,7 +28,11 @@
             android:exported="true"/>
         <activity
             android:parentActivityName=".HomeActivity"
-            android:name=".ListFilmsActivity"
+            android:name=".ListTrendingActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".ListTrendFilmsActivity"
+            android:parentActivityName=".ListTrendingActivity"
             android:exported="true"/>
     </application>
 

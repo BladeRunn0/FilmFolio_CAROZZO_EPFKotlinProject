@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/popup_bg"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <EditText
+        android:layout_marginStart="8dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:maxLines="1"
+        android:inputType="text"
+        android:id="@+id/search_edittext_popup"
+        android:hint="Enter your search"
+        android:textColorHint="#808080"
+        android:textColor="@color/black"/>
+
+    <Button
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="Search"
+        android:id="@+id/validate_search"/>
+
+</LinearLayout>
