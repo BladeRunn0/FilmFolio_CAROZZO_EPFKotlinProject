@@ -23,7 +23,7 @@ class ListTrendFilmsActivity : AppCompatActivity()  {
         runBlocking {
             val trendFilm = filmsAPI.getTrendingFilms()
 
-            recyclerView.adapter = FilmAdapter(trendFilm.results, this@ListTrendFilmsActivity, R.layout.film_view_trendlist)
+            recyclerView.adapter = FilmAdapter(trendFilm.results, this@ListTrendFilmsActivity, R.layout.film_view_trendlist, true)
         }
     }
 }

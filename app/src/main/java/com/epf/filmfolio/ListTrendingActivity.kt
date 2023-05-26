@@ -31,8 +31,8 @@ class ListTrendingActivity : AppCompatActivity(){
             val trendTV = filmsAPI.getTrendingSeries()
             val test_id = filmsAPI.getFilmById(507250)
 
-            recyclerViewFilms.adapter = FilmAdapter(trendFilm.results, this@ListTrendingActivity, R.layout.film_view)
-            recyclerViewTV.adapter = FilmAdapter(trendTV.results, this@ListTrendingActivity, R.layout.film_view)
+            recyclerViewFilms.adapter = FilmAdapter(trendFilm.results, this@ListTrendingActivity, R.layout.film_view, true)
+            recyclerViewTV.adapter = FilmAdapter(trendTV.results, this@ListTrendingActivity, R.layout.film_view, false)
         }
 
         val seeAllFilms = findViewById<Button>(R.id.allTrendFilm_button)
@@ -42,8 +42,6 @@ class ListTrendingActivity : AppCompatActivity(){
             val intent = Intent(this, ListTrendFilmsActivity::class.java)
             startActivity(intent)
         }
-
-
     }
 
 }

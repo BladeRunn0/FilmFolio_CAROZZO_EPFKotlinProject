@@ -34,6 +34,9 @@
             android:name=".ListTrendFilmsActivity"
             android:parentActivityName=".ListTrendingActivity"
             android:exported="true"/>
+        <activity
+            android:name=".FilmDetailActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>
