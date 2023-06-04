@@ -11,6 +11,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.epf.filmfolio.model.Film
@@ -49,26 +50,29 @@ class FilmAdapter(val films : List<Film>, val context: Context, val layout : Int
             rate.rating = film.vote_average
         }
 
-        val favorite = view.findViewById<CheckBox>(R.id.favorite)
+        if(view.findViewById<CheckBox>(R.id.favorite) != null){
+            val favorite = view.findViewById<CheckBox>(R.id.favorite)
 
-        checkExistingFav(favorite, film.id.toString())
+            checkExistingFav(favorite, film.id.toString())
 
-        favorite.setOnClickListener {
-            if(favorite.isChecked){
-                if(isFilm){
-                    saveFavToFile(film.id.toString(), "filmFavorites")
+            favorite.setOnClickListener {
+                if(favorite.isChecked){
+                    if(isFilm){
+                        saveFavToFile(film.id.toString(), "filmFavorites")
+                    }else{
+                        saveFavToFile(film.id.toString(), "tvFavorites")
+                    }
                 }else{
-                    saveFavToFile(film.id.toString(), "tvFavorites")
-                }
-            }else{
-                if(isFilm){
-                    deleteFavOnFile(film.id.toString(), "filmFavorites")
-                }else{
-                    deleteFavOnFile(film.id.toString(), "tvFavorites")
+                    if(isFilm){
+                        deleteFavOnFile(film.id.toString(), "filmFavorites")
+                    }else{
+                        deleteFavOnFile(film.id.toString(), "tvFavorites")
+                    }
                 }
             }
-
         }
+
+
 
 
         view.setOnClickListener {
