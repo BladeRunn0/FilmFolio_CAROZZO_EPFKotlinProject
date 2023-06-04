@@ -15,6 +15,8 @@ import android.widget.ImageView
 import android.widget.Space
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.epf.filmfolio.model.Film
 import kotlinx.coroutines.runBlocking
@@ -22,26 +24,23 @@ import org.w3c.dom.Text
 
 class FilmDetailActivity : AppCompatActivity() {
 
+    lateinit var recyclerView: RecyclerView;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filmdetail)
 
+        this.recyclerView = findViewById<RecyclerView>(R.id.list_films)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
         val filmId = this.intent.getIntExtra("Film", 0)
-        var serieId : Int = 0
-        if(filmId == 0){
-            serieId = this.intent.getIntExtra("Serie", 0)
-        }
 
         val filmsAPI = RetrofitHelper.getInstance("https://api.themoviedb.org/3/")
             .create(DatabaseService::class.java)
 
         runBlocking {
-            val film : Film
-            if(filmId != 0){
-                film = filmsAPI.getFilmById(filmId)
-            }else{
-                film = filmsAPI.getSerieById(serieId)
-            }
+            val film = filmsAPI.getFilmById(filmId)
+            val similarFilms = filmsAPI.getSimilarFilms(filmId)
 
 
             val filmName = findViewById<TextView>(R.id.film_name)
@@ -80,6 +79,9 @@ class FilmDetailActivity : AppCompatActivity() {
             val synopsis = findViewById<TextView>(R.id.film_synopsis)
             synopsis.text = film.overview
 
+            val languages = findViewById<TextView>(R.id.languages)
+            languages.text = film.spoken_languages.toString().replace("[", "").replace("]","")
+
             val status = findViewById<TextView>(R.id.film_status)
             status.text = film.status
 
@@ -93,11 +95,9 @@ class FilmDetailActivity : AppCompatActivity() {
                     .into(findViewById(R.id.film_image))
             }
 
+            recyclerView.adapter = FilmAdapter(similarFilms.results, this@FilmDetailActivity, R.layout.film_view, true)
 
         }
-
-
-
 
     }
 

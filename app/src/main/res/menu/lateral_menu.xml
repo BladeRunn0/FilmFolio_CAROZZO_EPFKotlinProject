@@ -16,7 +16,7 @@
     <item
         android:id="@+id/qr_scan"
         android:title="Scan QR code"
-        android:icon="@android:drawable/picture_frame"/>
+        android:icon="@drawable/ic_qrcscan"/>
 
     <item
         android:id="@+id/list_films_latmenu"
