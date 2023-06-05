@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.epf.filmfolio.model.Film
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 
 
 class HomeActivity : AppCompatActivity() {
@@ -32,28 +33,28 @@ class HomeActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
+
         // to make the Navigation drawer icon always appear on the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val latMenu = findViewById<NavigationView>(R.id.lat_menu)
+        latMenu.setNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.search -> {
+                    drawerLayout.close()
+                    searchPopup(currentView)
+                }
+                R.id.qr_scan -> startActivity(Intent(this, QRScannerActivity::class.java))
+            }
+            true
+        }
 
         val searchButton = findViewById<FloatingActionButton>(R.id.search_button)
         val qrButton = findViewById<FloatingActionButton>(R.id.qr_button)
         val listButton = findViewById<Button>(R.id.film_list)
 
         searchButton.setOnClickListener{
-            val popupView = onSearchButtonShowPopupWindowClick(currentView)
-
-            val searchEdittext = popupView.findViewById<EditText>(R.id.search_edittext_popup)
-            val searchButtonpopup = popupView.findViewById<Button>(R.id.validate_search)
-            var searchedFilm = ""
-
-            searchButtonpopup.setOnClickListener {
-                searchedFilm = searchEdittext.text.toString()
-                if(searchedFilm != ""){
-                    val intent = Intent(this, SearchResultActivity::class.java)
-                    intent.putExtra("SearchedFilm", searchedFilm)
-                    startActivity(intent)
-                }
-            }
+            searchPopup(currentView)
         }
 
         qrButton.setOnClickListener {
@@ -78,7 +79,6 @@ class HomeActivity : AppCompatActivity() {
         val focusable = true // lets taps outside the popup also dismiss it
         val popupWindow = PopupWindow(popupView, width, height, focusable)
         popupWindow.elevation = 50F
-//        popupView.setBackgroundDrawable(ColorDrawable(Color.WHITE))
 
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, -600)
 
@@ -89,14 +89,24 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-//            if(item.itemId == R.id.list_films_latmenu){
-//
-//            }
             true
         } else super.onOptionsItemSelected(item)
     }
 
-    fun getFilmForQuery(film : String) : String {
-        return film
+    private fun searchPopup(currentView : View){
+        val popupView = onSearchButtonShowPopupWindowClick(currentView)
+
+        val searchEdittext = popupView.findViewById<EditText>(R.id.search_edittext_popup)
+        val searchButtonpopup = popupView.findViewById<Button>(R.id.validate_search)
+        var searchedFilm = ""
+
+        searchButtonpopup.setOnClickListener {
+            searchedFilm = searchEdittext.text.toString()
+            if(searchedFilm != ""){
+                val intent = Intent(this, SearchResultActivity::class.java)
+                intent.putExtra("SearchedFilm", searchedFilm)
+                startActivity(intent)
+            }
+        }
     }
 }

@@ -93,6 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:id="@+id/lat_menu"
         app:menu="@menu/lateral_menu">
 
     </com.google.android.material.navigation.NavigationView>

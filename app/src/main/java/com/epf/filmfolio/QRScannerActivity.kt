@@ -52,10 +52,6 @@ class QRScannerActivity: AppCompatActivity(), ZXingScannerView.ResultHandler {
         intent.putExtra("Film", rawResult.text.toInt())
         startActivity(intent)
 
-        // Note:
-        // * Wait 2 seconds to resume the preview.
-        // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
-        // * I don't know why this is the case but I don't have the time to figure out.
         val handler = Handler()
         handler.postDelayed(
             { qrScanner!!.resumeCameraPreview(this@QRScannerActivity) },
