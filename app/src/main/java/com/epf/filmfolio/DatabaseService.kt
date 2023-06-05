@@ -38,6 +38,9 @@ interface DatabaseService {
     @GET("search/movie?api_key=a6a78235d30c91448b19e93a96fe7fc2")
     suspend fun getFilmQuery(@Query("query") title: String): listResults
 
+    @GET("search/tv?api_key=a6a78235d30c91448b19e93a96fe7fc2")
+    suspend fun getTVQuery(@Query("query") title: String): listResults
+
     @GET("movie/{movie_id}/similar?api_key=a6a78235d30c91448b19e93a96fe7fc2")
     suspend fun getSimilarFilms(@Path("movie_id") id: Int): listResults
 

@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.RatingBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +19,6 @@ import kotlinx.coroutines.runBlocking
 class SearchResultActivity : AppCompatActivity() {
 
     lateinit var recyclerView : RecyclerView
-    lateinit var ratingBar: RatingBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +35,21 @@ class SearchResultActivity : AppCompatActivity() {
         runBlocking {
 
             val searchedFilm = filmsAPI.getFilmQuery(searched.toString())
+            val searchedTV = filmsAPI.getTVQuery(searched.toString())
 
+            val radioGroup = findViewById<RadioGroup>(R.id.search_radiogroup)
+            val radioFilm = findViewById<RadioButton>(R.id.radio_film)
+
+            radioGroup.check(radioFilm.id)
             recyclerView.adapter = FilmAdapter(searchedFilm.results, this@SearchResultActivity, R.layout.film_view_searched, true)
+            radioFilm.setOnClickListener {
+                recyclerView.adapter = FilmAdapter(searchedFilm.results, this@SearchResultActivity, R.layout.film_view_searched, true)
+            }
 
+            val radioTV = findViewById<RadioButton>(R.id.radio_tv)
+            radioTV.setOnClickListener {
+                recyclerView.adapter = FilmAdapter(searchedTV.results, this@SearchResultActivity, R.layout.film_view_searched, false)
+            }
         }
-
-
     }
 }

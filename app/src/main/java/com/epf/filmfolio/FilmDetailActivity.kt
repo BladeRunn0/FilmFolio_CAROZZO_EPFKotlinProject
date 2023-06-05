@@ -119,9 +119,6 @@ class FilmDetailActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.back -> {
                 finish()
-                val intent : Intent
-                intent = Intent(this, ListTrendingActivity::class.java)
-                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
