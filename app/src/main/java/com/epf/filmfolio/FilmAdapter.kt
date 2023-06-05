@@ -1,5 +1,6 @@
 package com.epf.filmfolio
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -52,9 +53,7 @@ class FilmAdapter(val films : List<Film>, val context: Context, val layout : Int
 
         if(view.findViewById<CheckBox>(R.id.favorite) != null){
             val favorite = view.findViewById<CheckBox>(R.id.favorite)
-
             checkExistingFav(favorite, film.id.toString())
-
             favorite.setOnClickListener {
                 if(favorite.isChecked){
                     if(isFilm){
@@ -72,9 +71,6 @@ class FilmAdapter(val films : List<Film>, val context: Context, val layout : Int
             }
         }
 
-
-
-
         view.setOnClickListener {
             val intent : Intent
             if(isFilm){
@@ -84,10 +80,11 @@ class FilmAdapter(val films : List<Film>, val context: Context, val layout : Int
                 intent = Intent(context, SerieDetailActivity::class.java)
                 intent.putExtra("Serie", film.id)
             }
-
+            (context as Activity).finish()
             startActivity(context, intent, null)
-        }
 
+
+        }
     }
 
     private fun saveFavToFile(data: String, fileName: String) {

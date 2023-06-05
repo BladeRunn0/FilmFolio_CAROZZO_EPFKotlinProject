@@ -10,10 +10,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Space
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +18,8 @@ import com.bumptech.glide.Glide
 import com.epf.filmfolio.model.Film
 import kotlinx.coroutines.runBlocking
 import org.w3c.dom.Text
+import java.io.File
+import java.io.OutputStreamWriter
 
 class FilmDetailActivity : AppCompatActivity() {
 
@@ -41,6 +40,16 @@ class FilmDetailActivity : AppCompatActivity() {
         runBlocking {
             val film = filmsAPI.getFilmById(filmId)
             val similarFilms = filmsAPI.getSimilarFilms(filmId)
+
+            val favorite = findViewById<CheckBox>(R.id.favorite)
+            checkExistingFav(favorite, film.id.toString())
+            favorite.setOnClickListener {
+                if(favorite.isChecked){
+                    saveFavToFile(film.id.toString(), "filmFavorites")
+                }else{
+                    deleteFavOnFile(film.id.toString(), "filmFavorites")
+                }
+            }
 
 
             val filmName = findViewById<TextView>(R.id.film_name)
@@ -110,9 +119,58 @@ class FilmDetailActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.back -> {
                 finish()
+                val intent : Intent
+                intent = Intent(this, ListTrendingActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun saveFavToFile(data: String, fileName: String) {
+        val writer =
+            OutputStreamWriter(this.openFileOutput("${fileName}.txt", MODE_APPEND))
+        writer.append(data + "\n")
+        writer.close()
+    }
+    private fun deleteFavOnFile(data: String, fileName: String){
+
+        val listIdFav : MutableList<String>
+
+        listIdFav = File(this.filesDir.path + "/${fileName}.txt").readLines().toMutableList()
+
+        listIdFav.remove(data)
+
+        val writer =
+            OutputStreamWriter(this.openFileOutput("${fileName}.txt", MODE_PRIVATE))
+        writer.write("")
+        writer.close()
+
+        listIdFav.forEach { it -> saveFavToFile(it, fileName) }
+    }
+    private fun checkExistingFav(favorite: CheckBox, id: String){
+
+        if(File(this.filesDir.path + "/filmFavorites.txt").exists()){
+            val listIdFavFilm : MutableList<String>
+            listIdFavFilm = File(this.filesDir.path + "/filmFavorites.txt").readLines().toMutableList()
+
+            listIdFavFilm.forEach { it ->
+                if(it.equals(id)){
+                    favorite.isChecked = true
+                }
+            }
+        }
+
+        if(File(this.filesDir.path + "/tvFavorites.txt").exists()){
+            val listIdFavTV : MutableList<String>
+            listIdFavTV = File(this.filesDir.path + "/tvFavorites.txt").readLines().toMutableList()
+
+            listIdFavTV.forEach { it ->
+                if(it.equals(id)){
+                    favorite.isChecked = true
+                }
+            }
+        }
     }
 
 
