@@ -82,8 +82,6 @@ class FilmAdapter(val films : List<Film>, val context: Context, val layout : Int
             }
             (context as Activity).finish()
             startActivity(context, intent, null)
-
-
         }
     }
 

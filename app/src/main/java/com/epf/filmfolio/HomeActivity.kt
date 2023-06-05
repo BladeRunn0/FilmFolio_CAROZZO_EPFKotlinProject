@@ -40,6 +40,7 @@ class HomeActivity : AppCompatActivity() {
         val latMenu = findViewById<NavigationView>(R.id.lat_menu)
         latMenu.setNavigationItemSelectedListener {
             when(it.itemId){
+                R.id.favorites -> startActivity(Intent(this, FavoritesActivity::class.java))
                 R.id.search -> {
                     drawerLayout.close()
                     searchPopup(currentView)
@@ -51,10 +52,16 @@ class HomeActivity : AppCompatActivity() {
 
         val searchButton = findViewById<FloatingActionButton>(R.id.search_button)
         val qrButton = findViewById<FloatingActionButton>(R.id.qr_button)
+        val favButton = findViewById<FloatingActionButton>(R.id.fav_button)
         val listButton = findViewById<Button>(R.id.film_list)
 
         searchButton.setOnClickListener{
             searchPopup(currentView)
+        }
+
+        favButton.setOnClickListener{
+            val intent = Intent(this, FavoritesActivity::class.java)
+            startActivity(intent)
         }
 
         qrButton.setOnClickListener {
