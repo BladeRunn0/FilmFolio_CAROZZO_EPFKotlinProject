@@ -36,6 +36,7 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val searchButton = findViewById<FloatingActionButton>(R.id.search_button)
+        val qrButton = findViewById<FloatingActionButton>(R.id.qr_button)
         val listButton = findViewById<Button>(R.id.film_list)
 
         searchButton.setOnClickListener{
@@ -53,6 +54,11 @@ class HomeActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
+        }
+
+        qrButton.setOnClickListener {
+            val intent = Intent(this, QRScannerActivity::class.java)
+            startActivity(intent)
         }
 
         listButton.setOnClickListener {
