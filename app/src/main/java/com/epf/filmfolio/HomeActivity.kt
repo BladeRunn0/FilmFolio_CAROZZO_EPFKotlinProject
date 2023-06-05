@@ -46,6 +46,7 @@ class HomeActivity : AppCompatActivity() {
                     searchPopup(currentView)
                 }
                 R.id.qr_scan -> startActivity(Intent(this, QRScannerActivity::class.java))
+                R.id.about -> startActivity(Intent(this, AboutActivity::class.java))
             }
             true
         }
