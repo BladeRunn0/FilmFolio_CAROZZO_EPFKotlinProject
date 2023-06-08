@@ -23,7 +23,8 @@ import java.io.OutputStreamWriter
 
 class FilmViewHolder(view : View) : RecyclerView.ViewHolder(view)
 
-class FilmAdapter(val films : List<Film>, val context: Context, val layout : Int, val isFilm : Boolean) : RecyclerView.Adapter<FilmViewHolder>() {
+class FilmAdapter(val films : List<Film>, val context: Context, val layout : Int, val isFilm : Boolean, val limitItemCount : Int) : RecyclerView.Adapter<FilmViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -32,7 +33,8 @@ class FilmAdapter(val films : List<Film>, val context: Context, val layout : Int
         return FilmViewHolder(view)
     }
 
-    override fun getItemCount() = films.size
+    override fun getItemCount() = if(limitItemCount == 0) films.size else limitItemCount
+
 
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
         val film : Film = films[position]

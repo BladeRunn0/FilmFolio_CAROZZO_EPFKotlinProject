@@ -62,7 +62,7 @@ class FavoritesActivity : AppCompatActivity() {
                         listFilms.add(film)
                     }
                 }
-                recyclerView.adapter = FilmAdapter(listFilms, this@FavoritesActivity, R.layout.film_view, isFilm)
+                recyclerView.adapter = FilmAdapter(listFilms, this@FavoritesActivity, R.layout.film_view, isFilm, 0)
             }
         }
     }

@@ -6,13 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.runBlocking
 
-class ListTrendFilmsActivity : AppCompatActivity()  {
+class ListTrendSeriesActivity : AppCompatActivity() {
 
     lateinit var recyclerView : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_listtrendfilms)
+
+        setContentView(R.layout.activity_listtrendseries)
 
         this.recyclerView = findViewById<RecyclerView>(R.id.list_trend)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -21,10 +22,10 @@ class ListTrendFilmsActivity : AppCompatActivity()  {
             .create(DatabaseService::class.java)
 
         runBlocking {
-            val trendFilm = filmsAPI.getTrendingFilms()
+            val trendFilm = filmsAPI.getTrendingSeries()
 
             recyclerView.adapter = FilmAdapter(trendFilm.results,
-                this@ListTrendFilmsActivity, R.layout.film_view_trendlist, true, 0)
+                this@ListTrendSeriesActivity, R.layout.film_view_trendlist, true, 0)
         }
     }
 }

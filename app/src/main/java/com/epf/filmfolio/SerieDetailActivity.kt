@@ -124,7 +124,7 @@ class SerieDetailActivity : AppCompatActivity() {
                     .into(findViewById(R.id.serie_image))
             }
             val trendTV = seriesAPI.getSimilarTV(serieId)
-            recyclerViewTV.adapter = FilmAdapter(trendTV.results, this@SerieDetailActivity, R.layout.film_view, false)
+            recyclerViewTV.adapter = FilmAdapter(trendTV.results, this@SerieDetailActivity, R.layout.film_view, false, 7)
         }
     }
 

@@ -41,14 +41,17 @@ class SearchResultActivity : AppCompatActivity() {
             val radioFilm = findViewById<RadioButton>(R.id.radio_film)
 
             radioGroup.check(radioFilm.id)
-            recyclerView.adapter = FilmAdapter(searchedFilm.results, this@SearchResultActivity, R.layout.film_view_searched, true)
+            recyclerView.adapter = FilmAdapter(searchedFilm.results,
+                this@SearchResultActivity, R.layout.film_view_searched, true, 0)
             radioFilm.setOnClickListener {
-                recyclerView.adapter = FilmAdapter(searchedFilm.results, this@SearchResultActivity, R.layout.film_view_searched, true)
+                recyclerView.adapter = FilmAdapter(searchedFilm.results,
+                    this@SearchResultActivity, R.layout.film_view_searched, true, 0)
             }
 
             val radioTV = findViewById<RadioButton>(R.id.radio_tv)
             radioTV.setOnClickListener {
-                recyclerView.adapter = FilmAdapter(searchedTV.results, this@SearchResultActivity, R.layout.film_view_searched, false)
+                recyclerView.adapter = FilmAdapter(searchedTV.results,
+                    this@SearchResultActivity, R.layout.film_view_searched, false, 0)
             }
         }
     }
