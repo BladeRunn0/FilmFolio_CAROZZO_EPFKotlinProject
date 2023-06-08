@@ -134,9 +134,10 @@ class FilmDetailActivity : AppCompatActivity() {
                     .into(findViewById(R.id.film_image))
             }
 
-            recyclerView.adapter = FilmAdapter(similarFilms.results,
-                this@FilmDetailActivity, R.layout.film_view, true, 7)
-
+            if(similarFilms.results.isNotEmpty()){
+                recyclerView.adapter = FilmAdapter(similarFilms.results,
+                    this@FilmDetailActivity, R.layout.film_view, true, 7)
+            }
         }
 
     }

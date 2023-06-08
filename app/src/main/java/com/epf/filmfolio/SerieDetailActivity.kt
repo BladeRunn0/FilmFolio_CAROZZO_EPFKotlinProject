@@ -120,28 +120,32 @@ class SerieDetailActivity : AppCompatActivity() {
             val status = findViewById<TextView>(R.id.serie_status)
             status.text = serie.status
 
-            val lastEpisodeName = findViewById<TextView>(R.id.last_episode_name)
-            lastEpisodeName.text = serie.last_episode_to_air.get("name").toString()
+            if(serie.last_episode_to_air != null){
+                val lastEpisodeName = findViewById<TextView>(R.id.last_episode_name)
+                lastEpisodeName.text = serie.last_episode_to_air.get("name").toString()
 
-            val episodeDescription = findViewById<TextView>(R.id.episode_description)
-            episodeDescription.text = serie.last_episode_to_air.get("overview").toString()
+                val episodeDescription = findViewById<TextView>(R.id.episode_description)
+                episodeDescription.text = serie.last_episode_to_air.get("overview").toString()
 
-            findViewById<ImageView>(R.id.clock_episode).scaleX = 0.75F
-            findViewById<ImageView>(R.id.clock_episode).scaleY = 0.75F
+                findViewById<ImageView>(R.id.clock_episode).scaleX = 0.75F
+                findViewById<ImageView>(R.id.clock_episode).scaleY = 0.75F
 
-            val episodePosition = findViewById<TextView>(R.id.episode_position)
-            episodePosition.text = "S" + serie.last_episode_to_air.get("season_number").toString().split(".")[0] +
-                    "E" + serie.last_episode_to_air.get("episode_number").toString().split(".")[0]
+                val episodePosition = findViewById<TextView>(R.id.episode_position)
+                episodePosition.text = "S" + serie.last_episode_to_air.get("season_number").toString().split(".")[0] +
+                        "E" + serie.last_episode_to_air.get("episode_number").toString().split(".")[0]
 
-            val episodeDuration = findViewById<TextView>(R.id.duration_episode)
-            val tempDuration = serie.last_episode_to_air.get("runtime").toString().split(".")[0]
-            episodeDuration.text = tempDuration + " min"
+                val episodeDuration = findViewById<TextView>(R.id.duration_episode)
+                val tempDuration = serie.last_episode_to_air.get("runtime").toString().split(".")[0]
+                episodeDuration.text = tempDuration + " min"
 
 
-            Glide.with(this@SerieDetailActivity)
-                .load("https://image.tmdb.org/t/p/original/" + serie.last_episode_to_air.get("still_path").toString())
-                .apply(RequestOptions().override(413,232))
-                .into(findViewById(R.id.last_episode_image))
+                Glide.with(this@SerieDetailActivity)
+                    .load("https://image.tmdb.org/t/p/original/" + serie.last_episode_to_air.get("still_path").toString())
+                    .apply(RequestOptions().override(413,232))
+                    .into(findViewById(R.id.last_episode_image))
+            }
+
+
 
             if(serie.backdrop_path != null){
                 Glide.with(this@SerieDetailActivity)
@@ -152,8 +156,12 @@ class SerieDetailActivity : AppCompatActivity() {
                     .load("https://image.tmdb.org/t/p/original/" + serie.poster_path)
                     .into(findViewById(R.id.serie_image))
             }
-            val trendTV = seriesAPI.getSimilarTV(serieId)
-            recyclerViewTV.adapter = FilmAdapter(trendTV.results, this@SerieDetailActivity, R.layout.film_view, false, 7)
+            val similarTV = seriesAPI.getSimilarTV(serieId)
+            if(similarTV.results.isNotEmpty()){
+                recyclerViewTV.adapter = FilmAdapter(similarTV.results,
+                    this@SerieDetailActivity, R.layout.film_view, false, 7)
+            }
+
         }
     }
 
