@@ -12,7 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.zxing.Result
+import kotlinx.coroutines.runBlocking
 import me.dm7.barcodescanner.zxing.ZXingScannerView
+import retrofit2.HttpException
 
 class QRScannerActivity: AppCompatActivity(), ZXingScannerView.ResultHandler {
 
@@ -48,9 +50,29 @@ class QRScannerActivity: AppCompatActivity(), ZXingScannerView.ResultHandler {
         Log.d("QRCode1", rawResult.text)
         Log.d("QRCode2", rawResult.barcodeFormat.toString())
 
-        val intent = Intent(this, FilmDetailActivity::class.java)
-        intent.putExtra("Film", rawResult.text.toInt())
-        startActivity(intent)
+        var isFilm : Boolean
+        val filmsAPI = RetrofitHelper.getInstance("https://api.themoviedb.org/3/")
+            .create(DatabaseService::class.java)
+
+        runBlocking {
+            try {
+                filmsAPI.getFilmById(rawResult.text.toInt())
+                isFilm = true
+            }catch(e: HttpException){
+                isFilm = false
+            }
+        }
+
+        if(isFilm){
+            val intent = Intent(this, FilmDetailActivity::class.java)
+            intent.putExtra("Film", rawResult.text.toInt())
+            startActivity(intent)
+        }else{
+            val intent = Intent(this, SerieDetailActivity::class.java)
+            intent.putExtra("Serie", rawResult.text.toInt())
+            startActivity(intent)
+        }
+
 
         val handler = Handler()
         handler.postDelayed(
