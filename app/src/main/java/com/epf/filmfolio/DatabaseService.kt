@@ -44,6 +44,9 @@ interface DatabaseService {
     @GET("movie/{movie_id}/similar?api_key=a6a78235d30c91448b19e93a96fe7fc2")
     suspend fun getSimilarFilms(@Path("movie_id") id: Int): listResults
 
+    @GET("tv/{series_id}/similar?api_key=a6a78235d30c91448b19e93a96fe7fc2")
+    suspend fun getSimilarTV(@Path("series_id") id: Int): listResults
+
     @GET("movie/{movie_id}/recommendations?api_key=a6a78235d30c91448b19e93a96fe7fc2")
     suspend fun getRecommendedFilms(@Path("movie_id") id: Int): listResults
 
