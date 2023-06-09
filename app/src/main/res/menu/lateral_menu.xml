@@ -19,11 +19,6 @@
         android:icon="@drawable/ic_qrcscan"/>
 
     <item
-        android:id="@+id/list_films_latmenu"
-        android:title="Film list"
-        android:icon="@android:drawable/ic_menu_gallery"/>
-
-    <item
         android:id="@+id/about"
         android:title="About"
         android:icon="@android:drawable/ic_menu_help"/>
